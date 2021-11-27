@@ -78,27 +78,35 @@ function playRound(playerSelection, computerSelection) {
     }
 
     // Map outcome to text
-    let result;
-
-    if(player_win === 0) {
-        // Player lost
-        result = `You lost! ${computerSelection} beats ${playerSelection}`;
-    }
-
-    else if(player_win === 1) {
-        //Player tied
-        result = `You tied! ${computerSelection} ties ${playerSelection}`;
-    }
-
-    else if(player_win === 2) {
-        // Player won
-        result = `You won! ${playerSelection} beats ${computerSelection}`;
-    }
+    let result = map_outcome(player_win, computerSelection, playerSelection);
 
     return result;
 }
 
 function capitalize(str) {
+    // Helper function
     // Returns modified str with first character in uppercase and remaining str in lowercase
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+function map_outcome(outcome, computerSelection, playerSelection) {
+    // Helper function
+    // Maps outcome to text
+    // Outcome can be 0 (loss), 1 (tie), 2 (win)
+    let result;
+    if(outcome === 0) {
+        // Player lost
+        result = `You lost! ${computerSelection} beats ${playerSelection}`;
+    }
+
+    else if(outcome === 1) {
+        //Player tied
+        result = `You tied! ${computerSelection} ties ${playerSelection}`;
+    }
+
+    else if(outcome === 2) {
+        // Player won
+        result = `You won! ${playerSelection} beats ${computerSelection}`;
+    }
+    return result;
 }
