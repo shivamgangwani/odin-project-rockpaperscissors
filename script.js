@@ -23,3 +23,82 @@ function computerPlay() {
     }
     return outcome;
 }
+
+
+function playRound(playerSelection, computerSelection) {
+    // Plays one round of Rock Paper Scissors
+
+    // player_win records whether player won, lost or tied
+    // player_win takes 3 values: 0, 1, 2
+    // 0 -> loss, 1 -> tie, 2 -> win
+    let player_win = 0;
+
+    // Format arguments correctly
+    playerSelection = capitalize(playerSelection);
+    computerSelection = capitalize(computerSelection);
+
+    // Game logic
+    switch(playerSelection) {
+
+        case "Rock": 
+            if(computerSelection == "Rock") {
+                player_win = 1; // Tie
+            }
+            else if(computerSelection == "Paper") {
+                player_win = 0; // Loss
+            }
+            else if(computerSelection == "Scissor") {
+                player_win = 2; // Win
+            }
+            break;
+
+        case "Paper":
+            if(computerSelection == "Rock") {
+                player_win = 2; // Win
+            }
+            else if(computerSelection == "Paper") {
+                player_win = 1; // Tie
+            }
+            else if(computerSelection == "Scissor") {
+                player_win = 0; // Loss
+            }
+            break;
+
+        case "Scissors":
+            if(computerSelection == "Rock") {
+                player_win = 0; // Loss
+            }
+            else if(computerSelection == "Paper") {
+                player_win = 2; // Win
+            }
+            else if(computerSelection == "Scissor") {
+                player_win = 1; // Tie
+            }
+            break;
+    }
+
+    // Map outcome to text
+    let result;
+
+    if(player_win === 0) {
+        // Player lost
+        result = `You lost! ${computerSelection} beats ${playerSelection}`;
+    }
+
+    else if(player_win === 1) {
+        //Player tied
+        result = `You tied! ${computerSelection} ties ${playerSelection}`;
+    }
+
+    else if(player_win === 2) {
+        // Player won
+        result = `You won! ${playerSelection} beats ${computerSelection}`;
+    }
+
+    return result;
+}
+
+function capitalize(str) {
+    // Returns modified str with first character in uppercase and remaining str in lowercase
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
