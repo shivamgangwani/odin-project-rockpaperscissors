@@ -47,7 +47,7 @@ function playRound(playerSelection, computerSelection) {
             else if(computerSelection === "Paper") {
                 player_win = 0; // Loss
             }
-            else if(computerSelection === "Scissor") {
+            else if(computerSelection === "Scissors") {
                 player_win = 2; // Win
             }
             break;
@@ -59,7 +59,7 @@ function playRound(playerSelection, computerSelection) {
             else if(computerSelection === "Paper") {
                 player_win = 1; // Tie
             }
-            else if(computerSelection === "Scissor") {
+            else if(computerSelection === "Scissors") {
                 player_win = 0; // Loss
             }
             break;
@@ -71,7 +71,7 @@ function playRound(playerSelection, computerSelection) {
             else if(computerSelection == "Paper") {
                 player_win = 2; // Win
             }
-            else if(computerSelection == "Scissor") {
+            else if(computerSelection == "Scissors") {
                 player_win = 1; // Tie
             }
             break;
