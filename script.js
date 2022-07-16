@@ -109,50 +109,66 @@ function map_outcome(outcome, playerSelection, computerSelection) {
     return result;
 }
 
+let round_number = 1;
+let game_on = true;
+let scores = {
+    "player" : 0,
+    "computer" : 0
+};
 
-function game() {
-    // Play 5 rounds of Rock Paper Scissors
-    let score = 0;
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".game_choice").forEach( function(el) {
+        el.addEventListener("click", function(event) {
+            if(game_on) {
+                let playerChoice = capitalize(el.getAttribute("choice"));
+                game(playerChoice);
 
-    let wins = 0,
-        ties = 0,
-        losses = 0;
+                round_number += 1;
 
-    for(let i = 1; i <= 5; i++) {
-        // Play a round
-        
-        // Ask player for their play
-        let playerSelection = prompt(`Round ${i} : Rock, Paper or Scissors? `);
-        let computerSelection = computerPlay();
+                if(scores['player'] == 5 || scores['computer'] == 5) {
+                    game_on = false;
+                    document.querySelector("#final_result").innerHTML = (scores['player'] == 5 ? "Player" : "Computer");
+                }
+            }
+        });
+    });
+});
 
-        // Get result
-        let result = playRound(playerSelection, computerSelection);
 
-        // Show the result
-        console.log("----------------");
-        console.log(`Round ${i} result`);
-        console.log(`You played ${playerSelection}`);
-        console.log(`Computer played ${computerSelection}`);
-        console.log(map_outcome(result, playerSelection, computerSelection));
-        
-        // Show score after current round
-        score += result;
-        console.log(`Your current score: ${score}`);
-        console.log("----------------");
+function game(playerSelection) {
 
-        // Update wins, ties and losses tally
-        wins += (result === 2) ? 1 : 0;
-        ties += (result === 1) ? 1 : 0;
-        losses += (result === 0) ? 1 : 0;
-    }
+    // Play a round
+    let computerChoice = computerPlay();
+    let result = playRound(playerSelection, computerChoice);
 
-    // End of game result
-    console.log("----------------");
-    console.log("Game over!");
-    console.log(`Your score: ${score}`);
-    console.log("Total games: 5");
-    console.log(`Games won: ${wins}`);
-    console.log(`Games tied: ${ties}`);
-    console.log(`Games lost: ${losses}`);
-    console.log("----------------");
+    // Update result rows
+    let result_row = document.createElement("tr");
+
+    let row_round = document.createElement("td");
+    row_round.innerHTML = round_number;
+
+    let row_pChoice = document.createElement("td");
+    row_pChoice.innerHTML = playerSelection;
+
+    let row_cChoice = document.createElement("td");
+    row_cChoice.innerHTML = computerChoice;
+
+    let row_roundResult = document.createElement("td");
+    row_roundResult.innerHTML = map_outcome(result, playerSelection, computerChoice);
+
+
+    result_row.appendChild(row_round);
+    result_row.appendChild(row_pChoice);
+    result_row.appendChild(row_cChoice);
+    result_row.appendChild(row_roundResult);
+
+    result_body.appendChild(result_row);
+    
+
+    // Update scores
+    scores['player'] += (result === 2) ? 1 : 0;
+    scores['computer'] += (result === 0) ? 1 : 0;
+    // Update scores table
+    document.querySelector("#player_score").innerHTML = scores['player'];
+    document.querySelector("#computer_score").innerHTML = scores['computer'];
 }
